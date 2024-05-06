@@ -1,0 +1,84 @@
+import pandas as pd
+import numpy as np
+from google.colab import files
+uploaded = files.upload()
+
+2
+df = pd.read_csv("Stud_performance.csv.csv")
+
+3
+df.isnull()
+
+4
+print(df)
+
+5
+series = pd.isnull(df["math_score"])
+
+6
+print(series)
+
+7
+df.notnull().any()
+
+8
+series=pd.isnull(df["reading_score"])
+df[series]
+
+9
+series=pd.notnull(df["math_score"])
+df[series]
+
+10
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+df['gender']=le.fit_transform(df['gender'])
+newdf=df
+df
+
+11
+missing_values=["Na","na"]
+df=pd.read_csv("Stud_performance.csv.csv",na_values=missing_values)
+df
+
+12
+ndf=df
+ndf.fillna(0)
+
+13
+df["writing_score"].fillna('no written', inplace=True)
+df
+
+14
+ndf.replace(to_replace=np.nan,value=77)
+
+15
+ndf.dropna()
+
+16
+ndf.dropna(how='all')
+
+17
+ndf.dropna(axis=1)
+
+18
+new_data=ndf.dropna(axis=0,how='any')
+new_data
+
+19
+import pandas as pd
+import numpy as np
+df=pd.read_csv("Stud_performance.csv.csv")
+print(df)
+
+20
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+df=pd.read_csv("Stud_performance.csv.csv")
+print(df)
+
+21
+fig,ax=plt.subplots(figsize=(10,10))
+ax.scatter(df['math_score'],df['writing_score'])
+plt.show()

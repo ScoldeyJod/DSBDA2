@@ -1,0 +1,50 @@
+sent1 = 'I will walk 500 miles and I would walk 500 more. Just to be the man␣
+↪who walks' + 'a thousand miles to fall down at your door!'
+sent2 = 'I played the play playfully as the players were playing in the play␣
+↪with playfullness'
+
+2
+#Tokenization
+import nltk
+nltk.download('punkt')
+from nltk import word_tokenize, sent_tokenize
+print('Tokenized words:', word_tokenize(sent1))
+print('\nTokenized sentences:', sent_tokenize(sent1))
+
+3
+#POS Tagging
+nltk.download('averaged_perceptron_tagger')
+from nltk import pos_tag
+token = word_tokenize(sent1) + word_tokenize(sent2)
+tagged = pos_tag(token)
+print('Tagging Parts of Speech:', tagged)
+
+4
+#Stop-Words Removal
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+stop_words = stopwords.words('English')
+token = word_tokenize(sent1)
+cleaned_token = []
+for word in token:
+if word not in stop_words:
+cleaned_token.append(word)
+print('Unclean version:', token)
+print('\nCleaned version:', cleaned_token)
+
+5
+ #Stemming
+from nltk.stem import PorterStemmer
+stemmer = PorterStemmer()
+token = word_tokenize(sent2)
+stemmed = [stemmer.stem(word) for word in token]
+print(" ".join(stemmed))
+
+6
+#Lemmatization
+nltk.download('wordnet')
+from nltk.stem import WordNetLemmatizer
+lemmatizer = WordNetLemmatizer()
+token = word_tokenize(sent2)
+lemmatized_output = [lemmatizer.lemmatize(word) for word in token]
+print(" ".join(lemmatized_output))

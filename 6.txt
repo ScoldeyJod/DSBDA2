@@ -1,0 +1,59 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+from google.colab import files
+uploaded = files.upload()
+
+
+2
+
+df = pd.read_csv("Iris.csv")
+df.head()
+
+3
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+x = df.iloc[:,:4].values
+y = df['Species'].values
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size = 0.2)
+sc_x = StandardScaler()
+x_train = sc_x.fit_transform(x_train)
+x_teat = sc_x.transform(x_test)
+print(f'train dataset size - x:{x_train.shape}, y:{y_train.shape}')
+print(f'test dataset size - x:{x_test.shape}, y:{y_test.shape}')
+
+
+4
+from sklearn.naive_bayes import GaussianNB
+classifier = GaussianNB()
+classifier.fit (x_train, y_train)
+predictions = classifier.predict(x_test)
+mapper ={'Iris-setosa': 0, 'Iris-versicolor': 1, 'Iris-virginica':2}
+predictions_= [mapper[i] for i in predictions]
+fig, axs = plt.subplots(2,2,figsize = (12,10),constrained_layout = True)
+fig.suptitle('Regression Line Tracing')
+for i in range(4):
+  x, y = i// 2, i% 2
+  sns.regplot(x = x_test[:, i],y = predictions_, ax=axs[x, y])
+  axs[x, y].scatter(x_test[:, i][::-1],y_test[::-1],marker = '+',color="white")
+  axs[x,y].set_xlabel(df.columns[i + 1][:-2])
+
+
+5
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+cm = confusion_matrix(y_test, predictions)
+print(f'''Confusion matrix : \n
++----------------+-----------------------+----------------------+
+| | Positive Prediction | Negative Prediction |
+-----------------+-----------------------+----------------------+
+| Positive Class | True Positive (TP) {cm[0, 0]} | False Negative (FN) {cm[0,␣
+↪1]}|
+-----------------+-----------------------+----------------------+
+| Negative Class | False Positive (FP) {cm[1, 0]} | True Negative (TN) {cm[1,␣
+↪1]}|
++----------------+-----------------------+----------------------+\n'''
+)
+cr= classification_report(y_test, predictions)
+print('Classification Report : \n', cr)

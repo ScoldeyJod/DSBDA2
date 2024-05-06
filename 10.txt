@@ -1,0 +1,28 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+from google.colab import files
+uploaded = files.upload()
+df = pd.read_csv('Iris.csv')
+
+2
+df.head()
+
+3
+df.info()
+
+4
+df.describe()
+
+5
+ fig, axes = plt.subplots(2,2, figsize=(12,6), constrained_layout = True)
+for i in range(4):
+  x, y = i//2,i%2
+  axes[x,y].hist(df[df.columns[i+1]])
+  axes[x,y].set_title(f"Distribution of{df.columns[i+1][:-2]}")
+
+6
+data_to_plot = [df[x] for x in df.columns[1:-1]]
+fig, axes = plt.subplots(1, figsize=(12,8))
+bp = axes.boxplot(data_to_plot)
